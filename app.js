@@ -2,16 +2,18 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
-console.log(process.env.URL)
 
 mongoose
-    .connect('mongodb://localhost:27017/test', {
+    .connect(process.env.URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
     })
     .then(() => {
         console.log('DB conected')
+    })
+    .catch(()=>{
+        console.log('DB is ooops')
     })
 
 const port = 8000
