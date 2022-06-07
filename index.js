@@ -30,7 +30,7 @@ const isAdmin = (req, res, next) => {
   res.send("Admin dashboard page!");
   next();
 };
-app.get("/admin", admin, isAdmin);
+app.get("/admin",isAdmin, admin);
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
