@@ -5,7 +5,6 @@ const app = express()
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
-
 const authRoutes = require('./routes/auth')
 
 // DB connection
@@ -16,7 +15,7 @@ mongoose
         useCreateIndex: true,
     })
     .then(() => {
-        console.log('DB conected')
+        console.log('Database connection successful')
         const port = 8000
 
         app.listen(port, () => {
@@ -24,7 +23,7 @@ mongoose
         })
     })
     .catch(() => {
-        console.log('DB is ooops')
+        console.log('Database connection error ')
     })
 
 //Middelware

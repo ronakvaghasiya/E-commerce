@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const categorySchema = new mongoose.Schema(
     {
         name: {
-            type: stringify,
+            type: String,
             trim: true,
             require: true,
             maxlength: 32,
