@@ -1,5 +1,11 @@
 const User = require('../models/user')
+const { check, validationResult } = require('express-validator')
 exports.signup = (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array()  })
+    }
+
     const user = new User(req.body)
     user.save((err, user) => {
         if (err) {
@@ -7,7 +13,11 @@ exports.signup = (req, res) => {
                 err: 'not able to save user in db',
             })
         }
-        res.json(user)
+        res.json({
+            name: user.name,
+            email: user.email,
+            id: user._id,
+        })
     })
 }
 
