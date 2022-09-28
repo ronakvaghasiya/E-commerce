@@ -1,35 +1,37 @@
-require('dotenv').config()
-const mongoose = require('mongoose')
-const express = require('express')
-const app = express()
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
-const authRoutes = require('./routes/auth')
+require("dotenv").config();
 
-// DB connection
+const mongoose = require("mongoose");
+const express = require("express");
+const app = express();
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
+const authRoutes = require("./routes/auth");
+
+//DB Connection
 mongoose
-    .connect(process.env.URL, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-    })
-    .then(() => {
-        console.log('Database connection successful')
-        const port = 8000
+  .connect(process.env.URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true
+  })
+  .then(() => {
+    console.log("Database connection successful");
+  });
 
-        app.listen(port, () => {
-            console.log(`App is Runing is ${port}`)
-        })
-    })
-    .catch(() => {
-        console.log('Database connection error ')
-    })
+//Middlewares
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(cors());
 
-//Middelware
-app.use(bodyParser.json())
-app.use(cookieParser())
-app.use(cors())
+//My Routes
+app.use("/api", authRoutes);
 
-//Route
-app.use('/api', authRoutes)
+//PORT
+const port = process.env.PORT || 8000;
+
+//Starting a server
+app.listen(port, () => {
+  console.log(`app is running at ${port}`);
+});
