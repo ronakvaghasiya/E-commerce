@@ -1,7 +1,7 @@
 const User = require('../models/user')
 const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
-const expressJwt = require('express-jwt')
+var { expressjwt } = require('express-jwt')
 
 exports.signup = (req, res) => {
     const errors = validationResult(req)
@@ -69,7 +69,7 @@ exports.signout = (req, res) => {
 }
 
 //protected routes
-exports.isSignedin = expressJwt({
+exports.isSignedin = expressjwt({
     secret: process.env.SECRET,
     algorithms: ['HS256'],
     userProperty: 'auth',
@@ -77,7 +77,7 @@ exports.isSignedin = expressJwt({
 
 //custom middlewares
 exports.isAuthenticated = (req, res, next) => {
-    let checker = req.profile && req.auth && req.profile._id === req.auth._id
+    let checker = req.profile && req.auth && req.profile._id == req.auth._id
     if (checker) {
         return res.status(403).json({
             error: 'access denied',
